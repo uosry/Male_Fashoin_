@@ -31,7 +31,7 @@ const Dashboard = () => {
 
         axios({
           method: "delete",
-          url: `https://prodect.onrender.com/products/${item.id}`,
+          url: `https://data-api-yv91.onrender.com/products/${item.id}`,
         }).then((data) => setProduct(data.data));
       }
     });
@@ -66,7 +66,7 @@ const Dashboard = () => {
   const data = () => {
     axios({
       method: "get",
-      url: "https://prodect.onrender.com/products",
+      url: "https://data-api-yv91.onrender.com/products",
     }).then((data) => setProduct(data.data));
   };
   return (
@@ -76,6 +76,10 @@ const Dashboard = () => {
           <Link to={"/admin/add"} className="bg bg-light">
             {" "}
             <BUtton className="btn btn-success mt-3 mb-3 ">Add product</BUtton>
+          </Link>
+          <Link to={"/users"} className="bg bg-light">
+            {" "}
+            <BUtton className="btn btn-success mt-3 mb-3 ">users</BUtton>
           </Link>
           <tr>
             <th className="text-center">product</th>

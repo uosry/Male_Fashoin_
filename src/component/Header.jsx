@@ -4,11 +4,17 @@ import logo from "../data/logo.png";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { BsFillCartCheckFill } from "react-icons/bs";
 import { GoSignOut } from "react-icons/go";
 
-const Header = ({cart}) => {
+const Header = ({ cart }) => {
+  const sign_out = useNavigate("");
+  const signout = () => {
+    localStorage.removeItem("name");
+    localStorage.removeItem("role");
+    sign_out("/login");
+  };
   return (
     <div>
       {" "}
@@ -31,27 +37,42 @@ const Header = ({cart}) => {
               <Nav.Link as={Link} to={"/login"}>
                 Login
               </Nav.Link>
-              <Nav.Link as={Link} to={"/admin"}>
-                Dashboard
-              </Nav.Link>
+              {localStorage.role === "admin" && (
+                <Nav.Link as={Link} to={"/admin"}>
+                  Dashboard
+                </Nav.Link>
+              )}
               <Nav.Link as={Link} to={"/sign"}>
                 Sign
               </Nav.Link>
-              <Nav.Link as={Link} to={"/shop"}>
-                Shop
-              </Nav.Link>
+              {localStorage.role === "member" && (
+                <Nav.Link as={Link} to={"/shop"}>
+                  Shop
+                </Nav.Link>
+              )}
+              {localStorage.role === "admin" && (
+                <Nav.Link as={Link} to={"/shop"}>
+                  Shop for admin
+                </Nav.Link>
+              )}
             </Nav>
             <Nav className="ms-auto text-light d-flex w-25 justify-content-evenly fs-4">
               <div>
                 <Link className="text-light" to={"/cart"}>
                   <BsFillCartCheckFill />
                 </Link>
-                <span className="rounded  ">{cart.length}</span>
+                <span className="rounded">{cart.length}</span>
               </div>
               <div>
-                <Link className="text-light" >
-                  
-                  <GoSignOut />
+                <Link className="text-light">
+                  {
+                    <GoSignOut
+                      className={
+                        localStorage.name === "" ? "text-black" : "text-primary"
+                      }
+                      onClick={signout}
+                    />
+                  }
                 </Link>
               </div>
             </Nav>

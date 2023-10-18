@@ -44,7 +44,7 @@ const Sign = () => {
     for (let i = 0; i < password.length; i++) {
   
 
-      }  if (!isNaN(password[i] * 1)) {
+        if (!isNaN(password[i] * 1)) {
         countDigit++
       } else {
         if (password[i] == password[i].toUpperCase()) {
@@ -71,7 +71,7 @@ const Sign = () => {
     if (countDigit == 0) {
            alert('Invalid Form, 0 digit characters in password')
       return
-    }
+    }}
     usersdata()
 
 
@@ -88,7 +88,7 @@ const Sign = () => {
   const usersdata = () => {
     axios({
       method: "post",
-      url: "https://prodect.onrender.com/users",
+      url: "https://data-api-yv91.onrender.com/users",
        data: {
         city,
         email,

@@ -7,7 +7,7 @@ const Shop = ({addtocart}) => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://prodect.onrender.com/products/",
+      url: "https://data-api-yv91.onrender.com/products",
     }).then((data) => setProduct(data.data));
   }, []);
 
@@ -23,7 +23,7 @@ const Shop = ({addtocart}) => {
           >
             <Card.Img variant="top" src={item.img} />
             <Card.Body>
-              <Card.Title>{item.sort}</Card.Title>
+              <Card.Title onClick={()=>addtocart(item)}>{item.sort}</Card.Title>
               <Card.Text>{item.name}</Card.Text>
               <Card.Text>
                 {item.price}

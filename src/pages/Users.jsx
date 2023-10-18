@@ -8,19 +8,8 @@ const Users = () => {
   const usersdata = () => {
     axios({
       method: "get",
-      url: "https://prodect.onrender.com/users",
-      //     data:{
-      //     city
-      //     email
-      //     firstName
-      //     gender
-      //     image
-      //     lastName
-      //     password
-      //     phoneNumber
-      //     role: "member",
-      //     userName
-      // }
+      url: "https://data-api-yv91.onrender.com/users",
+     
     }).then((data) => {
       setusers(data.data);
     });

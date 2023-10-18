@@ -5,6 +5,10 @@ import { BsFillCreditCard2BackFill } from "react-icons/bs";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
 const Cart = ({ cartitem, chekcart }) => {
+  console.log(cartitem);
+  const x=cartitem.length>0&& cartitem.map((g)=>g.price*g.count).reduce((x,r)=>x+r)
+// console.log(x)
+  // console.log( cartitem.lenght>0&& cartitem.map((item)=>item.count*item.price).reduce((X,y)=> {return X+y} ));
   const pluse = (x) => {
     x++;
   };
@@ -84,9 +88,7 @@ const Cart = ({ cartitem, chekcart }) => {
           >
             <h1>cart total </h1>
             <h1 className="d-flex justify-content-between">
-              { cartitem.lenght>0&& cartitem
-                .map((item) => item.price * item.count)
-                .reduce((x, y) => (x+y))}
+              {x}
               $ <BsFillCreditCard2BackFill />
             </h1>
             <Button

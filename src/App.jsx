@@ -11,37 +11,48 @@ import Add from "./pages/Add";
 import Shop from "./pages/shop";
 import Cart from "./pages/Cart";
 import Users from "./pages/Users";
+import Maincontext from "./pages/MainContext";
+import axios from "axios";
 
 const App = () => {
   const [checkcart, setchetcart] = useState(true);
   const [cart, setcart] = useState([]);
+  const [users,setusers]=useState([])
 
   const addtocart = (e) => {
-    const y = {
-      count: 1,
-    };
-    const x = Object.assign(y, e);
+    e.count = 1;
+    //  console.log(e.name);
 
-    if (
-      cart.some((e) => {
-        return e;
-      })
-    )
-console.log(x);
-    else {
-      setcart([...cart, x]);
+  cart.length>0?  cart.map((t) => {
+    
+      if (t===e) {
+        e.count++;
+      } else {
+        setcart([...cart, e])
+      }
+    }):setcart([...cart, e]);
 
-    }
   };
+  const users_data=()=>{
+axios({
+
+  method:"get",
+  url:"https://data-api-yv91.onrender.com/users"
+}).then((data)=>setusers(data.data))
+
+
+  }
   useEffect(() => {
+
+    users_data()
     if (cart.length > 0) {
       setchetcart(false);
     } else {
       setchetcart(true);
     }
-  });
+  },[]);
   return (
-    <div>
+    <Maincontext.Provider value={{users}}>
       <Header cart={cart} />
       <Routes>
         <Route path={"/"} element={<Home />} />
@@ -59,7 +70,7 @@ console.log(x);
         />
       </Routes>
       <Footer />
-    </div>
+    </Maincontext.Provider>
   );
 };
 
