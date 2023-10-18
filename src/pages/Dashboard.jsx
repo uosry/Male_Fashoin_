@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import BUtton from "react-bootstrap/Button";
 // prodect.onrender.com/products
 import Table from "react-bootstrap/Table";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import Footer from "../component/Footer";
 //
 const Dashboard = () => {
@@ -16,11 +16,11 @@ const Dashboard = () => {
   const del = (item) => {
     console.log(item);
     Swal.fire({
-      title:"Are you sure?",
-      imageUrl:`${item.img} `,
+      title: "Are you sure?",
+      imageUrl: `${item.img} `,
       showDenyButton: true,
-      imageWidth:100,
-      imageHeight:200,
+      imageWidth: 100,
+      imageHeight: 200,
       showCancelButton: true,
       confirmButtonText: "yes",
       denyButtonText: `no`,
@@ -39,13 +39,12 @@ const Dashboard = () => {
     data();
   };
   const view = (item) => {
-    
     Swal.fire({
-    imageUrl:`${item.img} `,
-    title:`${item.name}`,
+      imageUrl: `${item.img} `,
+      title: `${item.name}`,
       showDenyButton: true,
-      imageWidth:100,
-      imageHeight:200,
+      imageWidth: 100,
+      imageHeight: 200,
       showCancelButton: true,
       confirmButtonText: "Save",
       denyButtonText: `Don't save`,
@@ -71,10 +70,13 @@ const Dashboard = () => {
     }).then((data) => setProduct(data.data));
   };
   return (
-    <div className="bg bg-dark" >
+    <div className="bg bg-dark">
       <Table striped bordered hover variant="dark">
         <thead>
-         <Link to={"/admin/add"} className="bg bg-light"> <BUtton className="btn btn-success mt-3 mb-3 " >Add product</BUtton></Link>
+          <Link to={"/admin/add"} className="bg bg-light">
+            {" "}
+            <BUtton className="btn btn-success mt-3 mb-3 ">Add product</BUtton>
+          </Link>
           <tr>
             <th className="text-center">product</th>
             <th className="text-center">price</th>
@@ -82,34 +84,34 @@ const Dashboard = () => {
           </tr>
         </thead>
         <tbody>
-          {product&& product.map((item) => (
-            <tr key={item.id}>
-              <td className="w" width="15%">
-                <img src={item.img} width="30%" className="rounded-pill" />
-              </td>
-              <td>{item.price}{"$"}</td>
+          {product &&
+            product.map((item) => (
+              <tr key={item.id}>
+                <td className="w" width="15%">
+                  <img src={item.img} width="30%" className="rounded-pill" />
+                </td>
+                <td>
+                  {item.price}
+                  {"$"}
+                </td>
 
-              <td>
-                <div className="d-flex justify-content-evenly algin-item-center">
-                  <BUtton variant="success" onClick={() => view(item)}>
-                    view
-                  </BUtton>
-                  <BUtton variant="primary">edit</BUtton>
-                  <BUtton variant="danger" onClick={() => del(item)}>
-                    del
-                  </BUtton>
-                </div>
-              </td>
-            </tr>
-          ))}
+                <td>
+                  <div className="d-flex justify-content-evenly algin-item-center">
+                    <BUtton variant="success" onClick={() => view(item)}>
+                      view
+                    </BUtton>
+                    <BUtton variant="primary">edit</BUtton>
+                    <BUtton variant="danger" onClick={() => del(item)}>
+                      del
+                    </BUtton>
+                  </div>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </Table>
-  
- 
     </div>
-  
   );
-
 };
 
 export default Dashboard;

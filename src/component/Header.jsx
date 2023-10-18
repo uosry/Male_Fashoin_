@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { BsFillCartCheckFill } from "react-icons/bs";
 import { GoSignOut } from "react-icons/go";
 
-const Header = () => {
+const Header = ({cart}) => {
   return (
     <div>
       {" "}
@@ -46,7 +46,7 @@ const Header = () => {
                 <Link className="text-light" to={"/cart"}>
                   <BsFillCartCheckFill />
                 </Link>
-                <span className="rounded  ">0</span>
+                <span className="rounded  ">{cart.length}</span>
               </div>
               <div>
                 <Link className="text-light" >

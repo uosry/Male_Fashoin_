@@ -8,29 +8,41 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Footer from "./component/Footer";
 import Add from "./pages/Add";
-import Shop from './pages/shop';
-import Cart from './pages/Cart';
+import Shop from "./pages/shop";
+import Cart from "./pages/Cart";
+import Users from "./pages/Users";
 
 const App = () => {
-const[checkcart,setchetcart]=useState(true)
-const[cart,setcart]=useState([])
-const addtocart=(e)=>{
-setchetcart(e)
-cart.push(e)
-console.log(cart);
-  }
-  useEffect(()=>{
-if(cart.length>0){
-setchetcart(false)
-}
-else{
-  setchetcart(false)
-}
-  })
+  const [checkcart, setchetcart] = useState(true);
+  const [cart, setcart] = useState([]);
+
+  const addtocart = (e) => {
+    const y = {
+      count: 1,
+    };
+    const x = Object.assign(y, e);
+
+    if (
+      cart.some((e) => {
+        return e;
+      })
+    )
+console.log(x);
+    else {
+      setcart([...cart, x]);
+
+    }
+  };
+  useEffect(() => {
+    if (cart.length > 0) {
+      setchetcart(false);
+    } else {
+      setchetcart(true);
+    }
+  });
   return (
     <div>
-    <Cart/>
-      <Header />
+      <Header cart={cart} />
       <Routes>
         <Route path={"/"} element={<Home />} />
         <Route path={"/login"} element={<Login />} />
@@ -38,12 +50,15 @@ else{
         <Route path={"/admin"} element={<Dashboard />} />
         <Route path={"/admin/add"} element={<Add />} />
         <Route path={"/shop"} element={<Shop addtocart={addtocart} />} />
+        <Route path={"/users"} element={<Users />} />
+
         <Route path={"*"} element={<Notfound />} />
-        <Route path={"/cart" } element={<Cart cart={cart} checkcart={checkcart} />}/>
-      
+        <Route
+          path={"/cart"}
+          element={<Cart cartitem={cart} chekcart={checkcart} />}
+        />
       </Routes>
       <Footer />
-
     </div>
   );
 };
