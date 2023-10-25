@@ -5,6 +5,8 @@ import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import { FormGroup } from "react-bootstrap";
 import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 const Sign = () => {
   const [firstName, setfirstName] = useState("");
   const [lastName, setlastName] = useState("");
@@ -13,83 +15,20 @@ const Sign = () => {
   const [gender, setgender] = useState("");
   const [email, setemail] = useState("");
   const [userName, setusername] = useState("");
+  const [chekuser, setchekuser] = useState(true);
+  const [chekpassword, setchekpassword] = useState(true);
   const [password, setpassword] = useState("");
   const [city, setcity] = useState("");
-  
-  function validateForm() {
-  
-    if (firstName.length == 0) {
-      alert('Invalid Form, First Name can not be empty')
-      return
-    }
+  const [user, setuser] = useState([]);
+  const a = useNavigate("/");
+  const [chek, setchek] = useState(true);
+  const [chekemail, setchekemail] = useState(false);
 
-   
-    if (email.length == 0) {
-      alert('Invalid Form, Email Address can not be empty')
-      return
-    }
-
-    if (password.length < 8) {
-      alert(
-        'Invalid Form, Password must contain greater than or equal to 8 characters.',
-      )
-      return
-    }
-
-    let countUpperCase = 0
-    let countLowerCase = 0
-    let countDigit = 0
-    let countSpecialCharacters = 0
-
-    for (let i = 0; i < password.length; i++) {
-  
-
-        if (!isNaN(password[i] * 1)) {
-        countDigit++
-      } else {
-        if (password[i] == password[i].toUpperCase()) {
-          countUpperCase++
-        }
-        if (password[i] == password[i].toLowerCase()) {
-          
-          countLowerCase++
-        }
-      }
-    
-
-    if (countLowerCase == 0) {
-           alert('Invalid Form, 0 lower case characters in password')
-      return
-    }
-
-    if (countUpperCase == 0) {
-     
-      alert('Invalid Form, 0 upper case characters in password')
-      return
-    }
-
-    if (countDigit == 0) {
-           alert('Invalid Form, 0 digit characters in password')
-      return
-    }}
-    usersdata()
-
-
-    if (countSpecialCharacters == 0) {
-          alert('Invalid Form, 0 special characters in password')
-      return
-        }
-    
-
-      
-
-    alert('Form is valid')
-  }
   const usersdata = () => {
     axios({
       method: "post",
       url: "https://data-api-yv91.onrender.com/users",
-       data: {
+      data: {
         city,
         email,
         firstName,
@@ -98,31 +37,42 @@ const Sign = () => {
         lastName,
         password,
         phoneNumber,
-        role:"memeber",
+        role: "memeber",
         userName,
       },
-    })
-    // axios({
-    //   method: "delete",
-    //   url: "https://prodect.onrender.com/users/2",
-    //   // data: {
-    //   //   city: "giza",
-    //   //   email: "uosryelprins@gmail.com",
-    //   //   firstName: "uosry",
-    //   //   gender: "male",
-    //   //   image: "https://i.ibb.co/dJ4fWLV/src.jpg",
-    //   //   lastName: "elprins",
-    //   //   password: "1234567",
-    //   //   phoneNumber: "01013774006",
-    //   //   role: "admin",
-    //   //   userName: "uosry_elprins"
-    //   // },
-    // });
-  };  
- 
+    });
+  };
+  const sbmit = () => {
+    if (chekemail) {
+      usersdata();
+      setchekemail(false);
+    }
+  };
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "https://data-api-yv91.onrender.com/users",
+    }).then((data) => setuser(data.data));
+  }, []);
+
   const handleForm = (e) => {
+    if (email !== " ") {
+      user.map((user) => {
+        if (user.email === email) {
+          Swal.fire("already sigin up!");
+          setchekemail(false);
+        } else {
+          setchekemail(true);
+        }
+      });
+    } else 
+      {
+        Swal.fire("invailed!");
+      }
+      
     e.preventDefault();
   };
+
   return (
     <div className="d-flex flex-column algin-item-center">
       <Form onSubmit={handleForm}>
@@ -199,7 +149,13 @@ const Sign = () => {
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>phoneNumber</Form.Label>
-            <Form.Control type="number"  value={phoneNumber} onChange={(e)=>{setphoneNumber(e.target.value)}}/>
+            <Form.Control
+              type="number"
+              value={phoneNumber}
+              onChange={(e) => {
+                setphoneNumber(e.target.value);
+              }}
+            />
           </Form.Group>
           <div>
             <Form.Group>
@@ -214,8 +170,8 @@ const Sign = () => {
         </div>
 
         <div className="d-flex justify-content-evenly bg bg-secondary p-3">
-          {true ? (
-            <Button variant="primary" type="submit" onClick={validateForm}>
+          {chek ? (
+            <Button variant="primary" type="submit" onClick={sbmit}>
               Submit
             </Button>
           ) : (

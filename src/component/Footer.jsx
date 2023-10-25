@@ -7,7 +7,7 @@ import pic_3 from "../data/clients/client-3.png";
 import pic_4 from "../data/clients/client-4.png";
 const Footer = () => {
   return (
-    <div className="w-100 bg bg-dark">
+    <div className="w-100 bg bg-dark container row" style={{minWidth:"100%"}}>
       <div className="container w-100">
         <footer
           className="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top  bg-dark w-100"
@@ -24,14 +24,14 @@ const Footer = () => {
 
           <div className="col mb-3"></div>
           
-          <div className="d-flex justify-content-between">
+          <div className="d-flex justify-content-between col-sm-12 ">
             
             
             <div className="d-flex flex-column mt-2 ">
               <img src={pic_1}  className="mt-2" />
               <img src={pic_3}  className="mt-2" />
             </div>
-            <div className="d-flex flex-column mt-2 ">
+            <div className="d-flex flex-column mt-2">
               <img src={pic_2} className="mt-2" />
               <img src={pic_4}  className="mt-2" />
             </div>

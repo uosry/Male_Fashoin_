@@ -7,12 +7,12 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { BsFillCartCheckFill } from "react-icons/bs";
 import { GoSignOut } from "react-icons/go";
+import Login from './../pages/Login';
 
 const Header = ({ cart }) => {
   const sign_out = useNavigate("");
   const signout = () => {
-    localStorage.removeItem("name");
-    localStorage.removeItem("role");
+    localStorage.clear();
     sign_out("/login");
   };
   return (
@@ -34,27 +34,22 @@ const Header = ({ cart }) => {
               <Nav.Link as={Link} to={"/"}>
                 Home
               </Nav.Link>
-              <Nav.Link as={Link} to={"/login"}>
-                Login
-              </Nav.Link>
+            {
+              localStorage.name===undefined &&  <Nav.Link as={Link} to={"/login"}>
+              Login
+            </Nav.Link>
+            }
               {localStorage.role === "admin" && (
                 <Nav.Link as={Link} to={"/admin"}>
                   Dashboard
                 </Nav.Link>
               )}
-              <Nav.Link as={Link} to={"/sign"}>
-                Sign
-              </Nav.Link>
-              {localStorage.role === "member" && (
+
+              {
                 <Nav.Link as={Link} to={"/shop"}>
                   Shop
                 </Nav.Link>
-              )}
-              {localStorage.role === "admin" && (
-                <Nav.Link as={Link} to={"/shop"}>
-                  Shop for admin
-                </Nav.Link>
-              )}
+              }
             </Nav>
             <Nav className="ms-auto text-light d-flex w-25 justify-content-evenly fs-4">
               <div>
@@ -65,14 +60,7 @@ const Header = ({ cart }) => {
               </div>
               <div>
                 <Link className="text-light">
-                  {
-                    <GoSignOut
-                      className={
-                        localStorage.name === "" ? "text-black" : "text-primary"
-                      }
-                      onClick={signout}
-                    />
-                  }
+                  {localStorage.name !==undefined &&<GoSignOut onClick={signout} />}
                 </Link>
               </div>
             </Nav>

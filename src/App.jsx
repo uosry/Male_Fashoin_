@@ -13,64 +13,82 @@ import Cart from "./pages/Cart";
 import Users from "./pages/Users";
 import Maincontext from "./pages/MainContext";
 import axios from "axios";
+import Lodiong from "./pages/Lodiong";
+import Adite from "./pages/Adite";
+import Chekadmin from "./pages/Chekadmin";
 
 const App = () => {
   const [checkcart, setchetcart] = useState(true);
-  const [cart, setcart] = useState([]);
-  const [users,setusers]=useState([])
-
-  const addtocart = (e) => {
-    e.count = 1;
-    //  console.log(e.name);
-
-  cart.length>0?  cart.map((t) => {
-    
-      if (t===e) {
-        e.count++;
-      } else {
-        setcart([...cart, e])
+  let [cart, setcart] = useState([]);
+  const [users, setusers] = useState([]);
+  const remove = (item) => {
+      cart.map((e, t,j) => {
+      if (item.id === e.id) {
+        cart.splice(t,1)
+        return t;
       }
-    }):setcart([...cart, e]);
-
+    });
+console.log(cart.length);
   };
-  const users_data=()=>{
-axios({
 
-  method:"get",
-  url:"https://data-api-yv91.onrender.com/users"
-}).then((data)=>setusers(data.data))
+  const addto_cart = (e) => {
+    const chek = cart.some((t) => {
+      return t.id === e.id;
+    });
+    if (chek) {
+      e.count++;
+    } else {
+      e.count = 1;
+      setcart([...cart, e]);
+      setchetcart(false);
+    }
+  };
+  const pluse = (e) => {};
 
-
-  }
   useEffect(() => {
-
-    users_data()
+    remove()
     if (cart.length > 0) {
       setchetcart(false);
     } else {
       setchetcart(true);
     }
-  },[]);
+  }, []);
   return (
-    <Maincontext.Provider value={{users}}>
+    <div>
       <Header cart={cart} />
       <Routes>
         <Route path={"/"} element={<Home />} />
         <Route path={"/login"} element={<Login />} />
-        <Route path={"/sign"} element={<Sign />} />
-        <Route path={"/admin"} element={<Dashboard />} />
-        <Route path={"/admin/add"} element={<Add />} />
-        <Route path={"/shop"} element={<Shop addtocart={addtocart} />} />
-        <Route path={"/users"} element={<Users />} />
+        <Route path={"/login/sign"} element={<Sign />} />
+        <Route
+          path={"/admin"}
+          element={
+            <Chekadmin>
+              <Dashboard />
+            </Chekadmin>
+          }
+        />
 
-        <Route path={"*"} element={<Notfound />} />
+        <Route path={"/admin/add"} element={<Add />} />
+        <Route path={"/shop"} element={<Shop addto_cart={addto_cart} />} />
+        <Route path={"/users"} element={<Users />} />
+        <Route path={"/lodiong"} element={<Lodiong />} />
+        <Route path={"/*"} element={<Notfound />} />
+        <Route path={"/adite/:id"} element={<Adite />} />
         <Route
           path={"/cart"}
-          element={<Cart cartitem={cart} chekcart={checkcart} />}
+          element={
+            <Cart
+              cartitem={cart}
+              chekcart={checkcart}
+              pluse={pluse}
+              remove={remove}
+            />
+          }
         />
       </Routes>
       <Footer />
-    </Maincontext.Provider>
+    </div>
   );
 };
 

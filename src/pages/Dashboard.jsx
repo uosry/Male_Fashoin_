@@ -4,17 +4,17 @@ import Swal from "sweetalert2";
 import BUtton from "react-bootstrap/Button";
 // prodect.onrender.com/products
 import Table from "react-bootstrap/Table";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Footer from "../component/Footer";
 //
 const Dashboard = () => {
   const [product, setProduct] = useState([]);
+  const param =useParams("")
   useEffect(() => {
     data();
   }, []);
 
   const del = (item) => {
-    console.log(item);
     Swal.fire({
       title: "Are you sure?",
       imageUrl: `${item.img} `,
@@ -62,6 +62,7 @@ const Dashboard = () => {
 
     data();
   };
+  
 
   const data = () => {
     axios({
@@ -104,7 +105,8 @@ const Dashboard = () => {
                     <BUtton variant="success" onClick={() => view(item)}>
                       view
                     </BUtton>
-                    <BUtton variant="primary">edit</BUtton>
+                  <BUtton as={Link} to={`/adite/${item.id}`} >edit</BUtton>
+                        
                     <BUtton variant="danger" onClick={() => del(item)}>
                       del
                     </BUtton>

@@ -1,0 +1,18 @@
+@media (max-width:720px){
+
+.PIC{
+display: grid;
+grid-template-columns:100% !important;
+}
+.PIC img{
+width: 200px ;
+
+}
+.PIC h1{
+    width: 100px ;
+    
+    }
+    .main{
+        width: 100% !important;
+    }
+}
